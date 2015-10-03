@@ -3,7 +3,7 @@ var geo = require('../utils/geo');
 
 
 var memberController = {
-	postMember: function(req, res){
+	createMember: function(req, res){
 		var member = new Member({
 			email: req.body.email
 		});
@@ -52,7 +52,7 @@ var memberController = {
 			
 		});
 	},
-	putMember: function(req, res){
+	updateMember: function(req, res){
 		Member.findById(req.params.id, function(err, member){
 			if (err){
       			res.send(err);
