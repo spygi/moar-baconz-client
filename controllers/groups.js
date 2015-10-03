@@ -3,17 +3,18 @@ var Group = require('../models/group');
 var groupController = {
 	
 	postGroup: function(req, res){
+		console.log(req.body);
+
 		var group = new Group({
 			name: req.body.name,
 			members: req.body.members,
-			items: req.body.items || []
+			items: req.body.items
 		});
 
 		group.save(function(err) {
 			if (err) {
-                        console.log(err);
-				res.send(err);
-                        return;
+				console.log(err);
+				return res.send(err);
 			}
                   if(group.members && group.members.length){
                         group.populate("members", function(err){
