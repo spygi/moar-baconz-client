@@ -21,7 +21,8 @@ var authenticationController = {
 
 				res.json({
 					success:true,
-					token: token
+					token: token,
+					id: member.id
 				})
 			}
 		});
