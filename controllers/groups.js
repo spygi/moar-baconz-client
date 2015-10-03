@@ -29,7 +29,7 @@ var groupController = {
                   }
 		});
 	},
-	getGroup: function(){
+	getGroup: function(req, res){
 		Group.findById(req.params.id, function(err, group){
 			if (err){
       			return res.send(err);
