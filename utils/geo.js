@@ -7,7 +7,7 @@ module.exports = {
 					location: [location.latitude, location.longitude],
 					radius: 300, // probably meters
 					types: "grocery_or_supermarket",
-					opennow: true
+					// opennow: true // for testing in the night :)
 				},callback);
 	}
 }
