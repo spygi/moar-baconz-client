@@ -13,7 +13,7 @@ var memberController = {
 		member.save(function(err) {
 			if (err) {
 				res.json({success: false, message: err.errmsg});
-			}else{
+			} else {
 				var result = {
 					id: member.id,
 					email: member.email,
@@ -29,8 +29,18 @@ var memberController = {
 			if (err){
       			res.send(err);
       		}
+      		if(!member){
+      			res.json({success:false, message: "not found"});
+      			return;
+      		}
 
-    		res.json(member);
+			var result = {
+				id: member.id,
+				email: member.email,
+				token: Member.generateToken(member),
+				nearbyStores: member.nearbyStores
+			};
+      		res.json(result);
 		});
 	},
 	putMember: function(req, res){
@@ -55,8 +65,9 @@ var memberController = {
       			member.location = req.body.location;
       			googlePlaces.placeSearch({
 					location: [req.body.location.latitude, req.body.location.longitude],
-					radius: 300,
-					types: "grocery_or_supermarket"
+					radius: 300, // probably meters
+					types: "grocery_or_supermarket",
+					opennow: true
 				}, function (error, response) {
 					member.nearbyStores = response;
 
@@ -64,7 +75,13 @@ var memberController = {
       					if(err){
       						res.send(err);
       					}
-      					res.json(member);
+      					var result = {
+							id: member.id,
+							email: member.email,
+							token: Member.generateToken(member),
+							nearbyStores: member.nearbyStores
+						};
+      					res.json(result);
       				});
 				});
       		} else {
@@ -72,7 +89,13 @@ var memberController = {
       				if(err){
       					res.send(err);
       				}
-      				res.json(member);
+      				var result = {
+						id: member.id,
+						email: member.email,
+						token: Member.generateToken(member),
+						nearbyStores: member.nearbyStores
+					};
+      				res.json(result);
       			});
       		}
       		
