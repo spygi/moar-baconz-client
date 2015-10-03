@@ -3,7 +3,7 @@ var geo = require('../utils/geo');
 
 
 var memberController = {
-	postMember: function(req, res){
+	createMember: function(req, res){
 		var member = new Member({
 			email: req.body.email
 		});
@@ -14,6 +14,7 @@ var memberController = {
 				res.json({success: false, message: err.errmsg});
 			} else {
 				var result = {
+					success: true,
 					id: member.id,
 					email: member.email,
 					token: Member.generateToken(member)
@@ -39,6 +40,7 @@ var memberController = {
       				res.send(err);
       			}
 				var result = {
+					success: true,
 					id: member.id,
 					email: member.email,
 					token: Member.generateToken(member),
@@ -50,7 +52,7 @@ var memberController = {
 			
 		});
 	},
-	putMember: function(req, res){
+	updateMember: function(req, res){
 		Member.findById(req.params.id, function(err, member){
 			if (err){
       			res.send(err);
@@ -83,6 +85,7 @@ var memberController = {
       							res.send(err);
       						}
 							var result = {
+								success: true,
 								id: member.id,
 								email: member.email,
 								token: Member.generateToken(member),
@@ -104,6 +107,7 @@ var memberController = {
       						res.send(err);
       					}
 						var result = {
+							success: true,
 							id: member.id,
 							email: member.email,
 							token: Member.generateToken(member),
