@@ -20,4 +20,4 @@ app.use('/status', function(req, res){
     res.send(JSON.stringify(data));
 })
 
-app.listen(process.env.port || 3000);
+app.listen(process.env.PORT || 3000);
