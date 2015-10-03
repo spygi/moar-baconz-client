@@ -1,6 +1,7 @@
 var express = require('express');
 var groupController = require('./controllers/groups');
 var memberController = require('./controllers/members');
+var itemController = require('./controllers/item');
 var authenticationController = require('./controllers/authentication');
 var apiRoutes = express.Router();
 
@@ -15,6 +16,12 @@ module.exports = function(app) {
 	apiRoutes.route('/group/:id')
 	    .get(authenticationController.hasValidToken, groupController.getGroup)
 	    .put(authenticationController.hasValidToken, groupController.putGroup);
+
+	apiRoutes.route('/group/:groupId/item')
+	    .post(authenticationController.hasValidToken, itemController.postItem);
+
+	apiRoutes.route('/group/:groupId/item/:itemId')
+	    .put(authenticationController.hasValidToken, itemController.putItem)
 
 	apiRoutes.route('/member')
 	    .post(memberController.postMember);
