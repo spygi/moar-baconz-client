@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var router = require('./router');
 
 
-mongoose.connect('mongodb://localhost:27017/moarbaconz');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/moarbaconz');
 
 var app = express();
 
