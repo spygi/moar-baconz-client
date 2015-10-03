@@ -20,10 +20,11 @@
   },
   "homepage": "https://github.com/spygi/moar-baconz#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
+    "jsonwebtoken": "^5.4.0",
     "method-override": "^2.3.5",
-    "mongoose": "^4.1.9",
-    "passport": "^0.3.0"
+    "mongoose": "^4.1.9"
   }
 }

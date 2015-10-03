@@ -1,8 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var router = require('./router');
-
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/moarbaconz');
 
@@ -13,7 +11,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json()); 
 
-app.use('/api', router);
+require('./routes')(app);
+
 app.use('/status', function(req, res){
     var data = { status: "running", version: "1.0.0" };
     res.setHeader('Content-Type', 'application/json');

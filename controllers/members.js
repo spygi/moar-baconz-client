@@ -2,17 +2,17 @@ var Member = require('../models/member');
 
 var memberController = {
 	postMember: function(req, res){
-		console.log(arguments);
 		var member = new Member({
-			email: req.body.email,
-			password: req.body.password
+			email: req.body.email
 		});
+		member.password = member.generateHash(req.body.password)
 
 		member.save(function(err) {
 			if (err) {
-				res.send(err);
+				res.json({success: false, message: err.errmsg});
+			}else{
+				res.json({ message: 'Member created', data: member });
 			}
-			res.json({ message: 'Member created', data: member });
 		});
 	},
 	getMember: function(req, res){
