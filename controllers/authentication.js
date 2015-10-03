@@ -17,7 +17,7 @@ var authenticationController = {
 			if(!member.validPassword(req.body.password)) {
 				res.json({success: false, message: "authentication failed."});
 			} else{
-				var token = jwt.sign(member, secret);
+				var token = Member.generateToken(member);
 
 				res.json({
 					success:true,
@@ -29,14 +29,14 @@ var authenticationController = {
 	hasValidToken: function(req, res, next){
 		var token = req.body.token || req.query.token || req.headers['x-access-token'];
 		if (token) { 
-    		jwt.verify(token, secret, function(err, decoded) {      
-      			if (err) {
-        			return res.json({ success: false, message: 'invalid token' });    
-      			} else {
-        			req.decoded = decoded;    
-        			next();
-      			}
-    		});
+			var decodedPayload = Member.isValidToken(token);
+			if(decodedPayload){
+				req.decodedPayload = decodedPayload;    
+        		next();
+			}else{
+				return res.json({ success: false, message: 'invalid token' }); 
+			}
+    	
 
   		} else {
     		return res.status(403).send({ 

@@ -14,7 +14,13 @@ var memberController = {
 			if (err) {
 				res.json({success: false, message: err.errmsg});
 			}else{
-				res.json({ message: 'Member created', data: member });
+				var result = {
+					id: member.id,
+					email: member.email,
+					token: Member.generateToken(member)
+				};
+				
+				res.json({ success: true, message: 'Member created', result: result });
 			}
 		});
 	},
@@ -45,10 +51,10 @@ var memberController = {
       		if(req.body.password){
       			member.password = req.body.password;
       		}
-      		if(req.body.location){
+      		if(req.body.location && req.body.location.latitude && req.body.location.longitude){
       			member.location = req.body.location;
       			googlePlaces.placeSearch({
-					location: [47.3881487,8.5162363],
+					location: [req.body.location.latitude, req.body.location.longitude],
 					radius: 300,
 					types: "grocery_or_supermarket"
 				}, function (error, response) {
