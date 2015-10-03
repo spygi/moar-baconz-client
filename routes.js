@@ -24,11 +24,11 @@ module.exports = function(app) {
 	    .put(authenticationController.hasValidToken, itemController.putItem)
 
 	apiRoutes.route('/member')
-	    .post(memberController.postMember);
+	    .post(memberController.createMember);
 
 	apiRoutes.route('/member/:id')
 	    .get(authenticationController.hasValidToken, memberController.getMember)
-	    .put(authenticationController.hasValidToken, memberController.putMember);
+	    .put(authenticationController.hasValidToken, memberController.updateMember);
 
 
 	app.use('/api', apiRoutes);
