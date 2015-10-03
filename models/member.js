@@ -4,7 +4,12 @@ var bcrypt   = require('bcrypt-nodejs');
 var MemberSchema   = new mongoose.Schema({
     email        : { type: String, index: { unique: true }},
     password     : String,
-	
+	location: {
+		latitude: Number,
+		longitude: Number,
+		date: Date
+	},
+	nearbyStores: [mongoose.Schema.Types.Mixed],
 	groups: { type: mongoose.Schema.Types.ObjectId, ref: 'Group' }
 });
 
