@@ -1,6 +1,5 @@
 var Member = require('../models/member');
-var GooglePlaces = require('googleplaces');
-var googlePlaces = new GooglePlaces(process.env.MOAR_BACONZ_GOOGLE_PLACES_KEY || 'your api key', 'json');
+var geo = require('../utils/geo');
 
 
 var memberController = {
@@ -34,13 +33,21 @@ var memberController = {
       			return;
       		}
 
-			var result = {
-				id: member.id,
-				email: member.email,
-				token: Member.generateToken(member),
-				nearbyStores: member.nearbyStores
-			};
-      		res.json(result);
+      		// lots of repeated code
+      		member.populate("groups", function(err){
+      			if (err){
+      				res.send(err);
+      			}
+				var result = {
+					id: member.id,
+					email: member.email,
+					token: Member.generateToken(member),
+					nearbyStores: member.nearbyStores,
+					groups: member.groups
+				};
+      			res.json(result);
+      		});
+			
 		});
 	},
 	putMember: function(req, res){
@@ -63,25 +70,27 @@ var memberController = {
       		}
       		if(req.body.location && req.body.location.latitude && req.body.location.longitude){
       			member.location = req.body.location;
-      			googlePlaces.placeSearch({
-					location: [req.body.location.latitude, req.body.location.longitude],
-					radius: 300, // probably meters
-					types: "grocery_or_supermarket",
-					opennow: true
-				}, function (error, response) {
-					member.nearbyStores = response;
+      			geo.getNearbyStores(function (error, places) {
+					member.nearbyStores = places;
 
 					return member.save(function(err){
       					if(err){
       						res.send(err);
       					}
-      					var result = {
-							id: member.id,
-							email: member.email,
-							token: Member.generateToken(member),
-							nearbyStores: member.nearbyStores
-						};
-      					res.json(result);
+      					// lots of repeated code
+      					member.populate("groups", function(err){
+      						if (err){	
+      							res.send(err);
+      						}
+							var result = {
+								id: member.id,
+								email: member.email,
+								token: Member.generateToken(member),
+								nearbyStores: member.nearbyStores,
+								groups: member.groups
+							};
+      						res.json(result);
+      					});
       				});
 				});
       		} else {
@@ -89,13 +98,20 @@ var memberController = {
       				if(err){
       					res.send(err);
       				}
-      				var result = {
-						id: member.id,
-						email: member.email,
-						token: Member.generateToken(member),
-						nearbyStores: member.nearbyStores
-					};
-      				res.json(result);
+      				// lots of repeated code
+      				member.populate("groups", function(err){
+      					if (err){	
+      						res.send(err);
+      					}
+						var result = {
+							id: member.id,
+							email: member.email,
+							token: Member.generateToken(member),
+							nearbyStores: member.nearbyStores,
+							groups: member.groups
+						};
+      					res.json(result);
+      				});
       			});
       		}
       		
