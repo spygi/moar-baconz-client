@@ -20,8 +20,7 @@ var groupController = {
                         group.populate("members", function(err){
                               if (err){
                                     console.log(err);
-                                    res.send(err);
-                                    return;
+                                    return res.send(err);
                               }
                               res.json(group);
                         });
@@ -33,11 +32,11 @@ var groupController = {
 	getGroup: function(){
 		Group.findById(req.params.id, function(err, group){
 			if (err){
-      			res.send(err);
+      			return res.send(err);
       		}
       		group.populate("members", function(err){
       			if (err){
-      				res.send(err);
+      				return res.send(err);
       			}
 				res.json(group);
       		});
@@ -46,7 +45,7 @@ var groupController = {
 	putGroup: function(req, res){
 		Group.findById(req.params.id, function(err, group){
 			if (err){
-      			res.send(err);
+      			return res.send(err);
       		}
       		if(req.body.name){
       			group.name = req.body.name;
@@ -59,11 +58,11 @@ var groupController = {
       		}
       		return group.save(function(err){
       			if(err){
-      				res.send(err);
+      				return res.send(err);
       			}
       			group.populate("members", function(err){
       				if (err){
-      					res.send(err);
+      					return res.send(err);
       				}
 					res.json(group);
       			});
