@@ -5,20 +5,28 @@ var groupController = {
 	postGroup: function(req, res){
 		var group = new Group({
 			name: req.body.name,
-			members: req.body.members || [],
+			members: req.body.members,
 			items: req.body.items || []
 		});
 
 		group.save(function(err) {
 			if (err) {
+                        console.log(err);
 				res.send(err);
+                        return;
 			}
-			group.populate("members", function(err){
-      			if (err){
-      				res.send(err);
-      			}
-				res.json(group);
-      		});
+                  if(group.members && group.members.length){
+                        group.populate("members", function(err){
+                              if (err){
+                                    console.log(err);
+                                    res.send(err);
+                                    return;
+                              }
+                              res.json(group);
+                        });
+                  } else{
+                        res.json(group);
+                  }
 		});
 	},
 	getGroup: function(){
