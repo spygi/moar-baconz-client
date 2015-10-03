@@ -1,0 +1,29 @@
+{
+  "name": "moar-baconz-server",
+  "version": "1.0.0",
+  "description": "a server for the moar-baconz project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spygi/moar-baconz.git"
+  },
+  "keywords": [
+    "bacon"
+  ],
+  "author": "Tom Forrer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spygi/moar-baconz/issues"
+  },
+  "homepage": "https://github.com/spygi/moar-baconz#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "method-override": "^2.3.5",
+    "mongoose": "^4.1.9",
+    "passport": "^0.3.0"
+  }
+}
