@@ -11,6 +11,7 @@ var authenticationController = {
 
 			if(!member){
 				res.json({success: false, message: "authentication failed."});
+				return;
 			}
 
 			if(!member.validPassword(req.body.password)) {
