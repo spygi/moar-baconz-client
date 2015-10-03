@@ -70,7 +70,7 @@ var memberController = {
       		}
       		if(req.body.location && req.body.location.latitude && req.body.location.longitude){
       			member.location = req.body.location;
-      			geo.getNearbyStores(function (error, places) {
+      			geo.getNearbyStores(member.location, function (error, places) {
 					member.nearbyStores = places;
 
 					return member.save(function(err){
