@@ -39,7 +39,7 @@ var itemController = {
 				if (err) {
 					return res.send(err);
 				}
-				res.json({ message: 'Item edited', data: doc} )
+				res.json({ message: 'Item edited', success: true, data: doc} )
 			}
 		);
 	}
