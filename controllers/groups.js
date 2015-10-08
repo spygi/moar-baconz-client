@@ -34,6 +34,10 @@ var groupController = {
 			if (err){
       			return res.send(err);
       		}
+                  if(!group){
+                        res.json({success:false, message: "not found"});
+                        return;
+                  }
       		group.populate("members", function(err){
       			if (err){
       				return res.send(err);
